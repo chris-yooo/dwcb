@@ -26,7 +26,6 @@ public class UserSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-//                .authorizeRequests()
                 .authorizeHttpRequests()
                 .antMatchers(HttpMethod.GET, "/", "/static/**", "/index.html", "/api/users/me").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()

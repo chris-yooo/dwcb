@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import {Icon} from '@iconify/react';
 
-export default function CostumerRegister() {
+export default function AddCostumer() {
 
     const [wooId, setWooId] = useState("");
     const [name, setName] = useState("");

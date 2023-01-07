@@ -11,7 +11,7 @@ type Props = {
     getUserDetails: () => void
 }
 
-export default function Profile(props: Props) {
+export default function UserProfile(props: Props) {
 
     const [id, setId] = useState(props.userDetails.id);
     const [username, setUsername] = useState(props.userDetails.username);
