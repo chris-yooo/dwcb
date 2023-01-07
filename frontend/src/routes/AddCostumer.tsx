@@ -64,15 +64,15 @@ export default function AddCostumer() {
         <StyledSection>
             <form onSubmit={handleCostumerRegister}>
                 <StyledDiv1>
-                    <StyledLabel htmlFor="firstname">Vorname:</StyledLabel>
+                    <StyledLabel htmlFor="wooId">Woocommerce-ID:</StyledLabel>
                     <StyledInput type='text'
                                  id="wooId"
                                  value={wooId}
                                  onChange={(e) => setWooId(e.target.value)}
-                                 placeholder={"672534"}
+                                 placeholder={"10515"}
                                  required/>
 
-                    <StyledLabel htmlFor={"lastname"}>Nachname:</StyledLabel>
+                    <StyledLabel htmlFor={"name"}>Vor- und Nachname:</StyledLabel>
                     <StyledInput type='text'
                                  id="name"
                                  value={name}
@@ -85,7 +85,7 @@ export default function AddCostumer() {
                                  id="username"
                                  value={username}
                                  onChange={(e) => setUsername(e.target.value)}
-                                 placeholder="maxmustermann"
+                                 placeholder="maxmustermann2023"
                                  required/>
 
                     {failedUser && <StyledInputError>{failedUser}</StyledInputError>}
@@ -95,17 +95,17 @@ export default function AddCostumer() {
                                  id="email"
                                  value={email}
                                  onChange={(e) => setEmail(e.target.value)}
-                                 placeholder="max@Mustermann.de"
+                                 placeholder="maxiiii@gmail.com"
                                  required/>
 
                     {errorMail && <StyledInputError>{errorMail}</StyledInputError>}
 
-                    <StyledLabel htmlFor={"paket"}>Passwort:</StyledLabel>
+                    <StyledLabel htmlFor={"paket"}>Speichergröße:</StyledLabel>
                     <StyledInput type='text'
                                  id="paket"
                                  value={paket}
                                  onChange={(e) => setPaket(e.target.value)}
-                                 placeholder="Bello123!"
+                                 placeholder="1TB - 5TB - 10TB - 20TB"
                                  required/>
                 </StyledDiv1>
             </form>
@@ -177,11 +177,11 @@ const StyledButton = styled.button`
   display: inline-block;
   border-radius: 5px;
 
-  &:hover {
+  :hover {
     background-color: var(--color-button-hover);
   }
 
-  &:active {
+  :active {
     background-color: var(--color-button-active);
   }
 `

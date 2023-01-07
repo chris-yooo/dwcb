@@ -2,6 +2,6 @@ export type UserModel = {
     id: string,
     username: string,
     passwordBcrypt: string,
-    roles: string,
+    role: string,
     email: string,
 }

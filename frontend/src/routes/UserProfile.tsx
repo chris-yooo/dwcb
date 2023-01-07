@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Icon} from "@iconify/react";
 import styled from "styled-components";
 import axios from "axios";
-import {UserModel} from "./UserModel";
+import {UserModel} from "../componenten/UserModel";
 
 type Props = {
     user: string
@@ -24,6 +24,7 @@ export default function UserProfile(props: Props) {
     const [doEditUsername, setDoEditUsername] = useState(false);
     const [doDelete, setDoDelete] = useState(false);
     const [errorMail, setErrorMail] = useState("");
+
 
     useEffect(() => {
         setId(props.userDetails.id);
@@ -59,10 +60,10 @@ export default function UserProfile(props: Props) {
             .then((response) => response.status)
             .then((status) => {
                 if (status === 204) {
-                    setMessageStatus(props.userDetails.username + " wurde Erfolreich gelöscht");
+                    setMessageStatus(props.userDetails.username + " wurde erfolgreich gelöscht");
                     (setTimeout(() => {
                         setMessageStatus("");
-                        props.logout()
+                        props.logout();
                     }, 2000));
                 }
             })
@@ -147,7 +148,7 @@ export default function UserProfile(props: Props) {
         {doDelete && (
             <StyledModalDiv1>
                 <StyledModalDiv2>
-                    <StyledP>Möchtest du deinen Account wirklich in die Mülltonne werfen?</StyledP>
+                    <StyledP>Bist du dir sicher das du deinen Benutzer löschen möchtest?</StyledP>
                     <StyledDeleteDiv3>
                         <StyledButton onClick={() => setDoDelete(false)}>Abbrechen</StyledButton>
                         <StyledDeleteButton onClick={deleteUser}>Löschen</StyledDeleteButton>
@@ -158,7 +159,7 @@ export default function UserProfile(props: Props) {
         {doEditUsername && (
             <StyledModalDiv1>
                 <StyledModalDiv2>
-                    <StyledP>Bitte neuen Username wählen</StyledP>
+                    <StyledP>Bitte neuen Benutzernamen wählen!</StyledP>
                     <StyledP2>Erlaubt sind: Groß & Klein-buchstaben, _ - und Zahlen</StyledP2>
                     <StyledInput type="text"
                                  id="username"
@@ -178,27 +179,30 @@ export default function UserProfile(props: Props) {
         <StyledSection>
             <form onSubmit={handleUpdateUserDetails}>
                 <StyledDiv1>
-                    <StyledLabel htmlFor="id">Deine ID lautet:</StyledLabel>
-                    <p id="id">{id}</p>
 
-                    <StyledLabel htmlFor="username">Username:</StyledLabel>
-                    <StyledInput type="text"
-                                 id="username"
-                                 value={username}
-                                 disabled={!doEditUsername}
-                                 required/>
+                    <div>
+                        <StyledLabel htmlFor="id">deine interne ID:</StyledLabel>
+                        <StyledSubP id="id">{id}</StyledSubP>
+                    </div>
 
-                    <StyledLabel htmlFor="roles">Deine ID lautet:</StyledLabel>
-                    <p id="roles">{id}</p>
+                    <div>
+                        <StyledLabel htmlFor="username">dein Benutzername:</StyledLabel>
+                        <StyledInput type="text"
+                                     id="username"
+                                     value={username}
+                                     disabled={!doEditUsername}
+                                     required/>
+                    </div>
 
-                    <StyledLabel htmlFor={"email"}>E-Mail:</StyledLabel>
-                    <StyledInput type="text"
-                                 id="email"
-                                 value={email}
-                                 onChange={(e) => setEmail(e.target.value)}
-                                 disabled={!doEdit}
-                                 required/>
-
+                    <div>
+                        <StyledLabel htmlFor={"email"}>deine E-Mail:</StyledLabel>
+                        <StyledInput type="text"
+                                     id="email"
+                                     value={email}
+                                     onChange={(e) => setEmail(e.target.value)}
+                                     disabled={!doEdit}
+                                     required/>
+                    </div>
                     {errorMail && <StyledErrorMessage>{errorMail}</StyledErrorMessage>}
 
                 </StyledDiv1>
@@ -243,6 +247,7 @@ export default function UserProfile(props: Props) {
 const StyledSection = styled.section`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin: 10px;
   width: 70%;
@@ -257,7 +262,6 @@ const StyledSection = styled.section`
 `
 
 const StyledDiv1 = styled.div`
-  width: 80%;
   margin: 0 0 10px 0;
   padding: 10px;
 `
@@ -314,17 +318,17 @@ const StyledButton = styled.button`
   display: inline-block;
   border-radius: 5px;
 
-  &:hover {
+  :hover {
     background-color: var(--color-button-hover);
   }
 
-  &:active {
+  :active {
     background-color: var(--color-button-active);
   }
 `
 
 const StyledInput = styled.input`
-  margin: 10px;
+  margin: 10px 0 25px 0;
   padding: 13px 12px;
   box-sizing: border-box;
   display: flex;
@@ -427,6 +431,16 @@ const StyledP = styled.p`
   font-style: normal;
   font-weight: 400;
   font-size: 1.3rem;
+  color: var(--color-white);
+  text-shadow: 0 0 10px var(--color-input-shadow);
+`
+
+const StyledSubP = styled.p`
+  margin: 5px 0 25px 10px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.0rem;
   color: var(--color-white);
   text-shadow: 0 0 10px var(--color-input-shadow);
 `

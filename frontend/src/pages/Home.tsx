@@ -3,9 +3,13 @@ import {Route, Routes} from "react-router";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {UserModel} from "./UserModel";
-import AddCostumer from "./AddCostumer";
-import UserProfile from "./UserProfile";
+import {UserModel} from "../componenten/UserModel";
+import AddCostumer from "../routes/AddCostumer";
+import UserProfile from "../routes/UserProfile";
+import Header from "../componenten/Header";
+import Footer from "../componenten/Footer";
+import Overview from "../routes/Overview";
+import {Icon} from "@iconify/react";
 
 type Props = {
     user: string
@@ -18,7 +22,7 @@ export default function Home(props: Props) {
         id: "",
         username: "",
         passwordBcrypt: "",
-        roles: "BASIC",
+        role: "",
         email: "",
     });
     const [userMenu, setUserMenu] = useState<boolean>(false);
@@ -43,9 +47,7 @@ export default function Home(props: Props) {
     }
 
     return <>
-        <StyledHeader>
-            <StyledH1>DieWerkstattCloud-Backend</StyledH1>
-        </StyledHeader>
+        <Header/>
         <StyledMain>
             <StyledNav>
 
@@ -70,7 +72,7 @@ export default function Home(props: Props) {
 
                         <StyledAddButton onClick={() => {
                             nlink("/adduser");
-                        }}>Benutzer anlegen
+                        }}><Icon icon="mdi:register" inline={true} width="15"/> Benutzer anlegen
                         </StyledAddButton>
 
                         <StyledLogoutButton onClick={() => {
@@ -92,7 +94,7 @@ export default function Home(props: Props) {
 
                         <StyledAddButton onClick={() => {
                             nlink("/addcostumer");
-                        }}>Kunden anlegen
+                        }}><Icon icon="mdi:register" inline={true} width="15"/> Kunden anlegen
                         </StyledAddButton>
                     </>
                 }
@@ -109,7 +111,7 @@ export default function Home(props: Props) {
 
                         <StyledAddButton onClick={() => {
                             nlink("/addstorage");
-                        }}>Storage anlegen
+                        }}><Icon icon="mdi:register" inline={true} width="15"/> Storage anlegen
                         </StyledAddButton>
                     </>
                 }
@@ -126,7 +128,7 @@ export default function Home(props: Props) {
 
                         <StyledAddButton onClick={() => {
                             nlink("/addcloud");
-                        }}>Cloud anlegen
+                        }}><Icon icon="mdi:register" inline={true} width="15"/> Cloud anlegen
                         </StyledAddButton>
                     </>
                 }
@@ -134,73 +136,40 @@ export default function Home(props: Props) {
             </StyledNav>
             <Routes>
 
-                <Route path="/"
-                       element={<><p>ÜBERSICHT</p></>}/>
+
+                <Route path="/" element={<Overview user={props.user} userDetails={userDetails} logout={logout}
+                                                   getUserDetails={getUserDetails}/>}/>
 
 
-                <Route path="/allusers"
-                       element={<><p>Alle User</p></>}/>
+                <Route path="/allusers" element={<><p>Alle User</p></>}/>
 
                 <Route path="/userprofile"
                        element={<UserProfile user={props.user} userDetails={userDetails} logout={logout}
                                              getUserDetails={getUserDetails}/>}/>
 
-                <Route path="/adduser"
-                       element={<><p>Benutzer anlegen</p></>}/>
+                <Route path="/adduser" element={<><p>Benutzer anlegen</p></>}/>
 
 
+                <Route path="/allcostumers" element={<><p>Alle Kunden</p></>}/>
 
-                <Route path="/allcostumers"
-                       element={<><p>Alle Kunden</p></>}/>
-
-                <Route path="/addcostumer"
-                       element={<AddCostumer/>}/>
+                <Route path="/addcostumer" element={<AddCostumer/>}/>
 
 
+                <Route path="/allstorages" element={<><p>Alle Storages</p></>}/>
 
-                <Route path="/allstorages"
-                       element={<><p>Alle Storages</p></>}/>
-
-                <Route path="/addstorage"
-                       element={<><p>Storage anlegen</p></>}/>
+                <Route path="/addstorage" element={<><p>Storage anlegen</p></>}/>
 
 
+                <Route path="/allclouds" element={<><p>Alle Clouds</p></>}/>
 
-                <Route path="/allclouds"
-                       element={<><p>Alle Clouds</p></>}/>
-
-                <Route path="/addcloud"
-                       element={<><p>Cloud anlegen</p></>}/>
+                <Route path="/addcloud" element={<><p>Cloud anlegen</p></>}/>
 
 
             </Routes>
         </StyledMain>
-        <StyledFooter>
-            <p>© 2022 DWCB</p>
-        </StyledFooter>
+        <Footer/>
     </>
 }
-
-const StyledHeader = styled.header`
-  margin: 0 0 20px 0;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 .0625rem .5rem 0 rgba(0, 0, 0, .5), 0 .0625rem .3125rem 0 rgba(0, 0, 0, .5);
-`
-
-const StyledH1 = styled.h1`
-  margin: 20px 0 0 0;
-  font-size: 2rem;
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 48px;
-  color: var(--color-white);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-`
 
 const StyledMain = styled.main`
   display: flex;
@@ -238,8 +207,13 @@ const StyledMainButton = styled.button`
   display: inline-block;
   cursor: pointer;
   transition: all 0.4s ease 0s;
+
   :hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.35), 0 17px 50px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  :active {
+    background-color: var(--color-button-active);
   }
 `
 
@@ -257,8 +231,13 @@ const StyledButton = styled.button`
   display: inline-block;
   cursor: pointer;
   transition: all 0.4s ease 0s;
+
   :hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.35), 0 17px 50px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  :active {
+    background-color: var(--color-button-active);
   }
 `
 
@@ -276,9 +255,14 @@ const StyledSubButton = styled.button`
   display: inline-block;
   cursor: pointer;
   transition: all 0.4s ease 0s;
+
   :hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.35), 0 17px 50px 0 rgba(0, 0, 0, 0.35);
     background-color: var(--color-darkgrey);
+  }
+
+  :active {
+    background-color: var(--color-button-active);
   }
 `
 
@@ -296,9 +280,14 @@ const StyledAddButton = styled.button`
   display: inline-block;
   cursor: pointer;
   transition: all 0.4s ease 0s;
+
   :hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.35), 0 17px 50px 0 rgba(0, 0, 0, 0.35);
     background-color: var(--color-green);
+  }
+
+  :active {
+    background-color: var(--color-button-active);
   }
 `
 
@@ -316,19 +305,13 @@ const StyledLogoutButton = styled.button`
   display: inline-block;
   cursor: pointer;
   transition: all 0.4s ease 0s;
+
   :hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.35), 0 17px 50px 0 rgba(0, 0, 0, 0.35);
     background-color: var(--color-red);
   }
-`
 
-const StyledFooter = styled.footer`
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  font-size: 0.8rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  color: var(--color-white);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  :active {
+    background-color: var(--color-button-active);
+  }
 `
